@@ -148,8 +148,8 @@
       en: { cat: 'Your ideas', label: function () { return 'An app with these features for ' + CONFIG.offerPrice.en + ', one payment, no subscription: would you be interested?'; }, hint: function () { return CONFIG.offerFeatures.en; }, options: ['Yes, definitely', 'Maybe, it depends', 'No, not at this price', "No, this kind of app doesn't interest me"] } },
     { id: 'agacements', cat: 'Pour finir', type: 'long', required: false, label: "Pour garder une trace de tes lectures, qu'est-ce qui t'agace ou te manque ?", hint: "Même un détail. Sois honnête : une critique nous aide plus qu'un compliment.",
       en: { cat: 'To finish', label: 'To keep track of your reading, what annoys you or is missing?', hint: 'Even a small detail. Be honest: criticism helps us more than a compliment.' } },
-    { id: 'tester', cat: 'Pour finir', type: 'contact', required: false, label: "Aimerais-tu tester l'appli avant sa sortie ?", options: ['Oui', 'Non, merci'], icons: ['check', 'x'], hint: "Si oui, laisse une adresse e-mail pour qu'on te prévienne. On ne s'en sert que pour ça.",
-      en: { cat: 'To finish', label: 'Would you like to try the app before it launches?', options: ['Yes', 'No, thanks'], hint: "If yes, leave an email address so we can let you know. We only use it for that." } }
+    { id: 'tester', cat: 'Pour finir', type: 'contact', required: false, label: "Veux-tu qu'on te tienne au courant de la suite ?", options: ['Oui', 'Non, merci'], icons: ['check', 'x'], hint: "Si oui, laisse une adresse e-mail : on te prévient, et tu pourras peut-être tester en avant-première. On ne s'en sert que pour ça.",
+      en: { cat: 'To finish', label: 'Do you want us to keep you posted?', options: ['Yes', 'No, thanks'], hint: "If yes, leave an email address: we'll let you know, and you may get to try it first. We only use it for that." } }
   ];
 
   // Texte d'une question dans la langue choisie (une fonction est appelée, pour les textes qui dépendent d'un réglage).
