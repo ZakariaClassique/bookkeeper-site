@@ -137,8 +137,8 @@
       en: { cat: 'Apps', label: 'How was it to use?', options: ['Simple and pleasant', 'Okay, nothing special', 'Complicated or annoying'] } },
     { id: 'pourquoi', cat: 'Les applis', type: 'long', required: false, showIf: HAS_TRIED, label: "Qu'est-ce qui t'a le plus plu ou le plus gêné ? Et l'utilises-tu encore ?", hint: 'Même en une phrase.',
       en: { cat: 'Apps', label: 'What did you like most, or what bothered you most? Do you still use it?', hint: 'Even in one sentence.' } },
-    { id: 'envie', cat: 'Tes envies', type: 'multi', max: 2, shuffle: true, fixedLast: 1, required: true, label: "Imagine une appli pour garder tes lectures. Quelles fonctions te donneraient le plus envie de l'utiliser ?", hint: 'Choisis-en deux au maximum.', options: ['Dicter une note à la voix, sans rien taper', 'Transformer une citation en belle image à partager', "Scanner le code-barres d'un livre pour l'ajouter tout seul", 'Voir mes statistiques de lecture (livres lus, temps passé…)', "Tout garder sur mon téléphone, sans compte ni internet", 'Aucune ne me donne envie'], icons: ['mic', 'image', 'scan', 'chart', 'lock', 'minus'],
-      en: { cat: 'Your wishes', label: 'Imagine an app to keep your reading. Which features would make you want to use it the most?', hint: 'Pick two at most.', options: ['Dictate a note by voice, without typing', 'Turn a quote into a nice image to share', "Scan a book's barcode to add it automatically", 'See my reading stats (books read, time spent…)', 'Keep everything on my phone, no account or internet', 'None of these appeal to me'] } },
+    { id: 'envie', cat: 'Tes envies', type: 'multi', max: 2, shuffle: true, fixedLast: 1, required: true, label: "Imagine une appli pour noter et retrouver ce que tu lis. Quelles fonctions te donneraient le plus envie de l'essayer ?", hint: 'Choisis-en deux au maximum.', options: ['Dicter une note à la voix, sans rien taper', 'Transformer une citation en belle image à partager', "Scanner le code-barres d'un livre pour l'ajouter tout seul", 'Voir mes statistiques de lecture (livres lus, temps passé…)', "Tout garder sur mon téléphone, sans compte ni internet", 'Aucune ne me donne envie'], icons: ['mic', 'image', 'scan', 'chart', 'lock', 'minus'],
+      en: { cat: 'Your wishes', label: 'Imagine an app to note down and find what you read. Which features would make you most want to try it?', hint: 'Pick two at most.', options: ['Dictate a note by voice, without typing', 'Turn a quote into a nice image to share', "Scan a book's barcode to add it automatically", 'See my reading stats (books read, time spent…)', 'Keep everything on my phone, no account or internet', 'None of these appeal to me'] } },
     { id: 'prix', cat: 'Tes envies', type: 'choice', required: true, label: "Imagine que tu achètes cette appli en une seule fois (un paiement unique, pas d'abonnement). Quel prix maximum te paraîtrait correct ?", options: ["Je ne l'achèterais pas", "Jusqu'à 3 €", "Jusqu'à 5 €", "Jusqu'à 10 €", 'Plus de 10 €'], icons: ['x', 'euro', 'euro', 'euro', 'euro'],
       en: { cat: 'Your wishes', label: "Imagine you buy this app once (a single payment, no subscription). What's the highest price that would feel fair?", options: ["I wouldn't buy it", 'Up to $3', 'Up to $5', 'Up to $10', 'More than $10'] } },
     { id: 'interet', cat: 'Tes envies', type: 'choice', required: true,
@@ -577,14 +577,21 @@
   function reveal() {
     var a = document.activeElement;
     if (!isField(a)) return;
-    var h = vv ? vv.height : window.innerHeight;
     var form = a.closest('form');
     var btns = form && form.querySelector('.ent-actions');
-    var limit = h - (btns ? btns.offsetHeight : 0) - 16;
-    var bottom = a.getBoundingClientRect().bottom;
-    if (bottom > limit) window.scrollBy(0, Math.ceil(bottom - limit));
-    var top = a.getBoundingClientRect().top;
-    if (top < 16) window.scrollBy(0, Math.floor(top - 16));
+    var barH = btns ? btns.offsetHeight : 0;
+    var top0 = vv ? vv.offsetTop : 0;
+    var h = vv ? vv.height : window.innerHeight;
+    var kb = vv ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
+    // Le navigateur, quand il fait défiler tout seul, respecte ces marges : le champ ne passe pas sous les boutons ni sous le clavier.
+    var de = document.documentElement;
+    de.style.scrollPaddingBottom = (kb + barH + 24) + 'px';
+    de.style.scrollPaddingTop = '16px';
+    var visTop = top0 + 16;
+    var visBottom = top0 + h - barH - 24;
+    var r = a.getBoundingClientRect();
+    if (r.height > visBottom - visTop || r.top < visTop) window.scrollBy(0, Math.floor(r.top - visTop));
+    else if (r.bottom > visBottom) window.scrollBy(0, Math.ceil(r.bottom - visBottom));
   }
   function onViewport() {
     if (vv) document.documentElement.style.setProperty('--kb', Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) + 'px');
@@ -592,7 +599,7 @@
   }
   if (vv) { vv.addEventListener('resize', onViewport); vv.addEventListener('scroll', onViewport); }
   document.addEventListener('focusin', function (e) {
-    if (isField(e.target)) { setTimeout(reveal, 100); setTimeout(reveal, 350); }
+    if (isField(e.target)) { [100, 350, 700, 1100].forEach(function (t) { setTimeout(reveal, t); }); }
   });
 
   if (canHist) { try { history.replaceState({ s: 0 }, '', location.pathname + location.search); } catch (e) { canHist = false; } }
