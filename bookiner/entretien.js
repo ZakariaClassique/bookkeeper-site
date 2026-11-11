@@ -33,29 +33,29 @@
       title: 'Parle-nous de tes lectures · Book Keeper', skip: 'Aller au contenu', back: 'Retour', next: 'Suivant', send: 'Envoyer mes réponses', sending: 'Envoi…', start: 'Commencer',
       progress: 'Avancement du questionnaire',
       qOf: function (p, t) { return 'Question ' + p + ' sur ' + t; }, pct: function (n) { return n + ' %'; },
-      introTitle: 'Parle-nous de tes lectures', introSub: 'Quelques questions sur tes lectures, depuis ton téléphone, quand tu veux.',
-      f1: '5 minutes', f2: "Lu uniquement par l'équipe", f3: 'Dis-nous ce que tu penses vraiment',
-      consent: "J'ai 15 ans ou plus et j'accepte que mes réponses soient lues par l'équipe Book Keeper pour mieux comprendre les lecteurs.",
+      introTitle: 'Parle-nous de tes lectures', introSub: 'Quelques questions pour mieux comprendre comment tu lis. Il n’y a ni bonne ni mauvaise réponse.',
+      f1: '5 minutes', f2: 'Lues uniquement par notre équipe', f3: 'Dis-nous ce que tu penses vraiment',
+      consent: "J'ai 15 ans ou plus et j'accepte que l'équipe Book Keeper lise mes réponses pour mieux comprendre les lecteurs.",
       privacy: 'Détails de confidentialité', privacyHref: 'confidentialite.html', close: 'Fermer', privLoad: 'Chargement…', privFail: "Impossible d'afficher la page ici.", privOpen: 'Ouvrir dans un nouvel onglet', tick: 'Coche la case pour commencer.',
-      logoAlt: 'Book Keeper, un endroit calme pour tes lectures',
+      logoAlt: 'Un coin lecture cosy avec un fauteuil et une bibliothèque',
       pickOne: 'Choisis une réponse pour continuer.', pickMany: 'Choisis au moins une réponse pour continuer.',
       email: 'Ton adresse e-mail', emailPh: 'ton@adresse.fr', emailBad: 'Écris une adresse e-mail valide, ou choisis « Non, merci ».',
       sendFail: "L'envoi n'a pas marché. Vérifie ta connexion et réessaie.",
-      thanks: 'Merci !', thanksText: 'Tes réponses sont bien arrivées, elles vont vraiment nous aider. Tu peux fermer cette page.', preview: "Mode aperçu : rien n'a été envoyé ni enregistré."
+      thanks: 'Merci !', thanksText: 'Tes réponses sont bien arrivées, elles vont vraiment nous aider.', shareTitle: 'Un autre lecteur pour nous aider ?', shareText: 'Envoie le questionnaire à quelqu’un qui aime lire. Ça prend 5 minutes.', shareBtn: 'Partager le questionnaire', shareMsg: 'Parle-nous de tes lectures : 5 minutes pour nous aider à imaginer un carnet de lecture privé.', shareCopied: 'Lien copié. Colle-le où tu veux.', shareFail: 'Impossible de partager ici. Copie le lien de la page.', closeHint: 'Tu peux fermer cette page.', preview: "Mode aperçu : rien n'a été envoyé ni enregistré."
     },
     en: {
       title: 'Tell us about your reading · Book Keeper', skip: 'Skip to content', back: 'Back', next: 'Next', send: 'Send my answers', sending: 'Sending…', start: 'Start',
       progress: 'Questionnaire progress',
       qOf: function (p, t) { return 'Question ' + p + ' of ' + t; }, pct: function (n) { return n + '%'; },
-      introTitle: 'Tell us about your reading', introSub: 'A few questions about how you read, from your phone, whenever you like.',
-      f1: '5 minutes', f2: 'Only read by the team', f3: 'Be honest, criticism helps us',
-      consent: "I'm 15 or older and I agree that the Book Keeper team may read my answers to better understand readers.",
+      introTitle: 'Tell us about your reading', introSub: 'A few questions to better understand how you read. There are no right or wrong answers.',
+      f1: '5 minutes', f2: 'Only read by our team', f3: 'Tell us what you really think',
+      consent: "I'm 15 or older and I agree to let the Book Keeper team read my answers to better understand readers.",
       privacy: 'Privacy details', privacyHref: 'privacy.html', close: 'Close', privLoad: 'Loading…', privFail: "Can't show the page here.", privOpen: 'Open in a new tab', tick: 'Tick the box to start.',
-      logoAlt: 'Book Keeper, a quiet place for your readings',
+      logoAlt: 'A cozy reading nook with an armchair and a bookshelf',
       pickOne: 'Pick an answer to continue.', pickMany: 'Pick at least one answer to continue.',
       email: 'Your email address', emailPh: 'you@example.com', emailBad: 'Enter a valid email address, or choose “No, thanks”.',
       sendFail: "Sending failed. Check your connection and try again.",
-      thanks: 'Thank you!', thanksText: 'Your answers have arrived. You can close this page.', preview: 'Preview mode: nothing was sent or saved.'
+      thanks: 'Thank you!', thanksText: 'Your answers have arrived and will really help us.', shareTitle: 'Another reader to help us?', shareText: 'Send the questionnaire to someone who loves reading. It takes 5 minutes.', shareBtn: 'Share the questionnaire', shareMsg: 'Tell us about your reading: 5 minutes to help us imagine a private reading journal.', shareCopied: 'Link copied. Paste it anywhere.', shareFail: "Can't share here. Copy the page link.", closeHint: 'You can close this page.', preview: 'Preview mode: nothing was sent or saved.'
     }
   };
   function S(k) { return UI[LANG][k]; }
@@ -99,7 +99,8 @@
     arrowLeft: '<path d="M19 12H5M12 19l-7-7 7-7"/>',
     arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>',
     close: '<path d="M18 6 6 18M6 6l12 12"/>',
-    chevronRight: '<path d="m9 6 6 6-6 6"/>'
+    chevronRight: '<path d="m9 6 6 6-6 6"/>',
+    share: '<path d="M12 3v12M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>'
   };
   function svg(name) {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -194,9 +195,9 @@
   var toastBox = el('div', { class: 'ent-toasts', role: 'alert', 'aria-live': 'assertive', 'aria-atomic': 'true' });
   document.body.appendChild(toastBox);
   var toastTimer = null;
-  function toast(msg) {
+  function toast(msg, icon) {
     clearTimeout(toastTimer);
-    var t = el('div', { class: 'ent-toast' }, [ico('alert'), el('span', { text: msg })]);
+    var t = el('div', { class: 'ent-toast' }, [ico(icon || 'alert'), el('span', { text: msg })]);
     toastBox.replaceChildren(t);
     function close() { clearTimeout(toastTimer); t.classList.add('out'); setTimeout(function () { if (t.parentNode) t.remove(); }, 200); }
     t.addEventListener('click', close);
@@ -558,11 +559,39 @@
 
   function done(r, sent) { finished = { r: r, sent: sent }; showDone(); }
 
+  // Partage du questionnaire : feuille de partage du téléphone si elle existe, sinon on copie le lien.
+  var SHARE_URL = 'https://bookkeeperapp.app/bookiner/';
+  function copyLink() {
+    function ok() { toast(S('shareCopied'), 'check'); }
+    function ko() { toast(S('shareFail')); }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(SHARE_URL).then(ok, ko); return; }
+    try {
+      var t = el('textarea', { readonly: '', 'aria-hidden': 'true', style: 'position:fixed;left:-9999px' });
+      t.value = SHARE_URL; document.body.appendChild(t); t.select();
+      var done = document.execCommand('copy'); t.remove();
+      done ? ok() : ko();
+    } catch (e) { ko(); }
+  }
+  function shareForm() {
+    if (navigator.share) {
+      navigator.share({ title: S('title'), text: S('shareMsg'), url: SHARE_URL }).catch(function (e) { if (!e || e.name !== 'AbortError') copyLink(); });
+    } else { copyLink(); }
+  }
+
   function showDone() {
     draft = null;
     var kids = [ico('check'), el('h2', { text: S('thanks') }), el('p', { text: S('thanksText') })];
     if (!CONFIG.endpoint) kids.push(el('p', { class: 'ent-note', text: S('preview') }));
-    show([el('div', { class: 'ent-card ent-done' }, kids)], 'h2');
+    var shareBtn = el('button', { type: 'button', class: 'ent-btn' }, [svg('share'), el('span', { text: S('shareBtn') })]);
+    shareBtn.addEventListener('click', shareForm);
+    var card = el('div', { class: 'ent-card ent-share' }, [
+      el('img', { class: 'ent-share-img', src: 'og-bookiner.jpg', alt: '', width: '1200', height: '630' }),
+      el('h3', { text: S('shareTitle') }),
+      el('p', { text: S('shareText') }),
+      shareBtn,
+      el('p', { class: 'ent-note', text: S('closeHint') })
+    ]);
+    show([el('div', { class: 'ent-card ent-done' }, kids), card], 'h2');
   }
 
   function render() {

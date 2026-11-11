@@ -25,7 +25,7 @@ a { color: var(--text); text-decoration-thickness: 2px; text-underline-offset: 4
 
 .ent-top { width: 100%; max-width: 560px; margin: 0 auto; padding: 16px 16px 0; }
 .ent-brand { display: flex; align-items: center; gap: 12px; margin: 0; font-weight: 700; font-size: 1.125rem; }
-.ent-brand img { width: 40px; height: 40px; border-radius: 12px; object-fit: cover; }
+.ent-brand img { width: 40px; height: 40px; border-radius: 4px; object-fit: cover; }
 .ent-progress-row { display: flex; justify-content: space-between; margin: 0 0 8px; color: var(--text-2); font-size: 0.9375rem; }
 .ent-progress-row p { margin: 0; }
 .ent-progress-bar { height: 8px; border-radius: 8px; background: var(--soft); overflow: hidden; border: 1px solid var(--line); }
@@ -75,7 +75,7 @@ a { color: var(--text); text-decoration-thickness: 2px; text-underline-offset: 4
 
 /* Accueil */
 .ent-hero { margin: 0; }
-.ent-hero img.photo { display: block; width: 100%; height: auto; aspect-ratio: 716 / 439; object-fit: cover; border-radius: 24px; background: var(--soft); }
+.ent-hero img.photo { display: block; width: 100%; height: auto; aspect-ratio: 716 / 439; object-fit: cover; border-radius: 16px; background: var(--soft); }
 .ent-intro-body { display: flex; flex-direction: column; gap: 12px; padding-top: 0; }
 .ent-intro-body h1, .ent-intro-body .ent-sub { text-align: center; }
 .ent-intro-body h1 { margin: 0; font-size: 1.5rem; line-height: 1.15; font-weight: 800; text-wrap: balance; outline: none; }
@@ -92,6 +92,12 @@ a { color: var(--text); text-decoration-thickness: 2px; text-underline-offset: 4
 .ent-done { align-items: flex-start; }
 .ent-done .ent-ico { width: 56px; height: 56px; border-radius: 16px; }
 .ent-done .ent-ico svg { width: 30px; height: 30px; }
+.ent-share { margin-top: 16px; align-items: stretch; }
+.ent-share-img { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); }
+.ent-card.ent-share h3 { margin: 0; font-size: 1.125rem; line-height: 1.3; font-weight: 700; text-wrap: balance; }
+.ent-share p { margin: 0; color: var(--text-2); }
+.ent-share .ent-btn { flex: none; width: 100%; }
+.ent-share .ent-note { text-align: center; }
 
 /* Pages texte (confidentialité) */
 .ent-doc { width: 100%; max-width: 560px; margin: 0 auto; padding: 16px 16px 48px; }
@@ -103,7 +109,7 @@ a { color: var(--text); text-decoration-thickness: 2px; text-underline-offset: 4
 .ent-doc .summary p { margin: 0; color: var(--text); }
 
 @media (prefers-reduced-motion: reduce) { .ent-progress-bar span { transition: none; } }
-@media (min-width: 640px) { .ent-main { padding-top: 24px; } .ent-hero img.photo { display: block; width: 100%; height: auto; aspect-ratio: 716 / 439; object-fit: cover; border-radius: 24px; background: var(--soft); } }
+@media (min-width: 640px) { .ent-main { padding-top: 24px; } .ent-hero img.photo { display: block; width: 100%; height: auto; aspect-ratio: 716 / 439; object-fit: cover; border-radius: 16px; background: var(--soft); } }
 
 body { padding-bottom: var(--kb, 0px); }
 
