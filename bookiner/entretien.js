@@ -11,7 +11,7 @@
     contact: 'contact@bookkeeperapp.app',
     keep: "jusqu'à la sortie de l'appli au plus tard, puis elles sont supprimées",
     // Offre testée dans la question « intérêt » : à ajuster ici (prix plafonné à 9,99 € par décision du 2026-11-06).
-    offerPrice: { fr: '4,99 €', en: '$4.99' },
+    offerPrice: { fr: '9,99 €', en: '$9.99' },
     offerFeatures: {
       fr: "Scanner le code-barres d'un livre, écrire ou dicter des notes, suivre ta progression, voir des statistiques sans pression, partager une citation en image, exporter tes données. Tout reste sur ton téléphone, sans compte ni publicité.",
       en: "Scan a book's barcode, write or dictate notes, track your progress, see stats without pressure, share a quote as an image, export your data. Everything stays on your phone, with no account and no ads."
