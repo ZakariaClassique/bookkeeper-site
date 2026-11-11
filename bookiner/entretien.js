@@ -98,7 +98,8 @@
     alert: '<circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/>',
     arrowLeft: '<path d="M19 12H5M12 19l-7-7 7-7"/>',
     arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>',
-    close: '<path d="M18 6 6 18M6 6l12 12"/>'
+    close: '<path d="M18 6 6 18M6 6l12 12"/>',
+    chevronRight: '<path d="m9 6 6 6-6 6"/>'
   };
   function svg(name) {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -386,7 +387,7 @@
     ]);
     var cb = el('input', { type: 'checkbox', id: 'consent' });
     cb.checked = consent;
-    var link = el('a', { class: 'ent-more', href: S('privacyHref'), 'aria-haspopup': 'dialog' }, [el('span', { text: S('privacy') }), svg('arrowRight')]);
+    var link = el('a', { class: 'ent-more', href: S('privacyHref'), 'aria-haspopup': 'dialog' }, [el('span', { text: S('privacy') }), svg('chevronRight')]);
     link.addEventListener('click', function (e) { e.preventDefault(); if (draft) draft(); openPrivacy(link); });
     var consentBox = el('div', { class: 'ent-consent' }, [
       el('label', { class: 'ent-check' }, [cb, el('span', { text: S('consent') })]),
