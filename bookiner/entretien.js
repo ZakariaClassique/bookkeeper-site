@@ -484,7 +484,7 @@
       field = el('div', { class: 'ent-field' }, [inp2]);
     }
 
-    var card = el('div', { class: 'ent-card' }, [el('p', { class: 'ent-pill', text: txt(q, 'cat') }), head, hint, field]);
+    var card = el('div', { class: 'ent-card' }, [head, hint, field]);
     form.appendChild(card);
     form.appendChild(actions(true, i === N - 1 ? S('send') : S('next'), false));
     if (q.type === 'choice') {
