@@ -118,8 +118,8 @@
   // Le français est le texte de base (et la valeur enregistrée) ; en: contient la version anglaise (mêmes options, même ordre).
   var HAS_TRIED = function (a) { return a.essai_appli === 'Oui'; };
   var QUESTIONS = [
-    { id: 'surnom', cat: 'Toi', type: 'text', required: false, label: "Comment veux-tu qu'on t'appelle ?", hint: 'Un prénom ou un surnom, comme tu veux. Tu peux laisser vide.',
-      en: { cat: 'You', label: 'What should we call you?', hint: 'A first name or a nickname, whatever you like. You can leave it empty.' } },
+    { id: 'surnom', cat: 'Toi', type: 'text', required: false, label: 'Ton prénom, ou un surnom ?', hint: 'Comme tu veux. Tu peux laisser vide.',
+      en: { cat: 'You', label: 'Your first name, or a nickname?', hint: 'Whatever you like. You can leave it empty.' } },
     { id: 'age', cat: 'Toi', type: 'choice', required: true, label: "Dans quelle tranche d'âge es-tu ?", options: ['15 à 17 ans', '18 à 24 ans', '25 à 34 ans', '35 à 44 ans', '45 ans et plus'], icons: ['user', 'user', 'user', 'user', 'user'],
       en: { cat: 'You', label: 'Which age range are you in?', options: ['15 to 17', '18 to 24', '25 to 34', '35 to 44', '45 and over'] } },
     { id: 'frequence', cat: 'Tes lectures', type: 'choice', required: true, label: 'Tu lis à quelle fréquence ?', options: ['Tous les jours', 'Quelques fois par semaine', 'Quelques fois par mois', 'Rarement'], icons: ['sun', 'repeat', 'calendar', 'hourglass'],
