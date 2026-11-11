@@ -36,7 +36,7 @@
       introTitle: 'Parle-nous de tes lectures', introSub: 'Quelques questions sur tes lectures, depuis ton téléphone, quand tu veux.',
       f1: '5 minutes', f2: "Lu uniquement par l'équipe", f3: 'Sois franc, une critique nous aide',
       consent: "J'ai 15 ans ou plus et j'accepte que mes réponses soient lues par l'équipe Book Keeper pour mieux comprendre les lecteurs.",
-      privacy: 'Détails de confidentialité', privacyHref: 'confidentialite.html', tick: 'Coche la case pour commencer.',
+      privacy: 'Détails de confidentialité', privacyHref: 'confidentialite.html', close: 'Fermer', privLoad: 'Chargement…', privFail: "Impossible d'afficher la page ici.", privOpen: 'Ouvrir dans un nouvel onglet', tick: 'Coche la case pour commencer.',
       logoAlt: 'Book Keeper, un endroit calme pour tes lectures',
       pickOne: 'Choisis une réponse pour continuer.', pickMany: 'Choisis au moins une réponse pour continuer.',
       email: 'Ton adresse e-mail', emailPh: 'ton@adresse.fr', emailBad: 'Écris une adresse e-mail valide, ou choisis « Non, merci ».',
@@ -50,7 +50,7 @@
       introTitle: 'Tell us about your reading', introSub: 'A few questions about how you read, from your phone, whenever you like.',
       f1: '5 minutes', f2: 'Only read by the team', f3: 'Be honest, criticism helps us',
       consent: "I'm 15 or older and I agree that the Book Keeper team may read my answers to better understand readers.",
-      privacy: 'Privacy details', privacyHref: 'privacy.html', tick: 'Tick the box to start.',
+      privacy: 'Privacy details', privacyHref: 'privacy.html', close: 'Close', privLoad: 'Loading…', privFail: "Can't show the page here.", privOpen: 'Open in a new tab', tick: 'Tick the box to start.',
       logoAlt: 'Book Keeper, a quiet place for your readings',
       pickOne: 'Pick an answer to continue.', pickMany: 'Pick at least one answer to continue.',
       email: 'Your email address', emailPh: 'you@example.com', emailBad: 'Enter a valid email address, or choose “No, thanks”.',
@@ -97,7 +97,8 @@
     clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
     alert: '<circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/>',
     arrowLeft: '<path d="M19 12H5M12 19l-7-7 7-7"/>',
-    arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>'
+    arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    close: '<path d="M18 6 6 18M6 6l12 12"/>'
   };
   function svg(name) {
     var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -214,6 +215,8 @@
     render();
   }
   window.addEventListener('popstate', function (e) {
+    if (modal) { removeModal(); return; }
+    if (e.state && e.state.modal) return;
     if (finished) { showDone(); return; }
     var s = e.state && typeof e.state.s === 'number' ? e.state.s : 0;
     while (s >= 1 && s <= N && !shown(QUESTIONS[s - 1])) s += 1;
@@ -228,15 +231,98 @@
     if (skipLink) skipLink.textContent = S('skip');
     backLabel.textContent = S('back');
     bar.setAttribute('aria-label', S('progress'));
-    langOpts.forEach(function (o) { o.classList.toggle('on', o.getAttribute('data-lang') === LANG); });
-    langBtn.setAttribute('aria-label', LANG === 'fr' ? 'Langue : français. Appuyer pour passer en anglais.' : 'Language: English. Tap to switch to French.');
+    document.querySelectorAll('.ent-lang-opt').forEach(function (o) { o.classList.toggle('on', o.getAttribute('data-lang') === LANG); });
+    document.querySelectorAll('.ent-lang').forEach(function (b) { b.setAttribute('aria-label', LANG === 'fr' ? 'Langue : français. Appuyer pour passer en anglais.' : 'Language: English. Tap to switch to French.'); });
   }
   // Toute la surface du sélecteur est un seul bouton : un toucher n'importe où passe à l'autre langue.
-  langBtn.addEventListener('click', function () {
+  function toggleLang() {
     if (draft) draft();
     LANG = LANG === 'fr' ? 'en' : 'fr';
     applyLang(); render();
-  });
+    if (modal) fillModal();
+  }
+  langBtn.addEventListener('click', toggleLang);
+
+  // Modale « Détails de confidentialité » : plein écran, fondu à l'ouverture et à la fermeture,
+  // Retour (gauche), langue (centre), croix (droite). Le texte vient des pages confidentialite.html / privacy.html (une seule source).
+  var modal = null, modalBody = null, modalOpener = null, modalTimer = null;
+  var privCache = {};
+  var pageBlocks = function () { return Array.prototype.slice.call(document.querySelectorAll('.ent-top, #app, .ent-toasts')); };
+
+  function fillModal() {
+    modal.querySelector('.ent-modal-back span').textContent = S('back');
+    modal.querySelector('.ent-modal-x').setAttribute('aria-label', S('close'));
+    var key = LANG;
+    function show(node) {
+      if (!modal || key !== LANG) return;
+      modalBody.replaceChildren(node);
+      modal.setAttribute('aria-labelledby', 'priv-title');
+      var h = modalBody.querySelector('h1'); if (h) h.id = 'priv-title';
+      modalBody.scrollTop = 0;
+    }
+    if (privCache[key]) { show(document.importNode(privCache[key], true)); return; }
+    modalBody.replaceChildren(el('p', { class: 'ent-modal-msg', text: S('privLoad') }));
+    fetch(S('privacyHref'), { credentials: 'same-origin' }).then(function (r) {
+      if (!r.ok) throw new Error('http');
+      return r.text();
+    }).then(function (t) {
+      var d = new DOMParser().parseFromString(t, 'text/html');
+      var m = d.querySelector('.ent-doc');
+      if (!m) throw new Error('doc');
+      m.querySelectorAll('.ent-brand, nav').forEach(function (n) { n.remove(); });
+      privCache[key] = m;
+      show(document.importNode(m, true));
+    }).catch(function () {
+      var a = el('a', { href: S('privacyHref'), target: '_blank', rel: 'noopener', text: S('privOpen') });
+      show(el('div', { class: 'ent-doc' }, [el('p', { text: S('privFail') }), el('p', {}, [a])]));
+    });
+  }
+
+  function openPrivacy(opener) {
+    if (modal) return;
+    clearTimeout(modalTimer);
+    modalOpener = opener || null;
+    var back = el('button', { type: 'button', class: 'ent-back-top ent-modal-back' }, [svg('arrowLeft'), el('span', { text: S('back') })]);
+    var lang = langBtn.cloneNode(true); lang.removeAttribute('id');
+    var x = el('button', { type: 'button', class: 'ent-modal-x', 'aria-label': S('close') }, [svg('close')]);
+    var head = el('div', { class: 'ent-modal-bar' }, [back, lang, x]);
+    modalBody = el('div', { class: 'ent-modal-body' });
+    modal = el('div', { class: 'ent-modal', role: 'dialog', 'aria-modal': 'true' }, [el('div', { class: 'ent-modal-top' }, [head]), modalBody]);
+    document.body.appendChild(modal);
+    pageBlocks().forEach(function (b) { b.setAttribute('inert', ''); });
+    document.documentElement.classList.add('modal-open');
+    applyLang();
+    lang.addEventListener('click', toggleLang);
+    back.addEventListener('click', closePrivacy);
+    x.addEventListener('click', closePrivacy);
+    modal.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.preventDefault(); closePrivacy(); return; }
+      if (e.key !== 'Tab') return;
+      var f = Array.prototype.slice.call(modal.querySelectorAll('button, a[href]'));
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    if (canHist) { try { history.pushState({ modal: 1 }, '', '#confidentialite'); } catch (e) { canHist = false; } }
+    fillModal();
+    requestAnimationFrame(function () { requestAnimationFrame(function () { if (modal) { modal.classList.add('open'); x.focus(); } }); });
+  }
+  function removeModal() {
+    if (!modal) return;
+    var m = modal; modal = null; modalBody = null;
+    m.classList.remove('open');
+    pageBlocks().forEach(function (b) { b.removeAttribute('inert'); });
+    document.documentElement.classList.remove('modal-open');
+    modalTimer = setTimeout(function () { if (m.parentNode) m.remove(); }, 240);
+    if (modalOpener && document.body.contains(modalOpener)) modalOpener.focus();
+    else { var c = document.getElementById('consent'); if (c) c.focus(); }
+  }
+  function closePrivacy() {
+    if (!modal) return;
+    if (canHist && history.state && history.state.modal) history.back(); // popstate ferme la modale
+    else removeModal();
+  }
 
   function setProgress() {
     document.body.classList.toggle('is-intro', step === 0 && !finished);
@@ -300,7 +386,8 @@
     ]);
     var cb = el('input', { type: 'checkbox', id: 'consent' });
     cb.checked = consent;
-    var link = el('a', { href: S('privacyHref'), target: '_blank', rel: 'noopener', text: S('privacy') });
+    var link = el('a', { class: 'ent-more', href: S('privacyHref'), 'aria-haspopup': 'dialog' }, [el('span', { text: S('privacy') }), svg('arrowRight')]);
+    link.addEventListener('click', function (e) { e.preventDefault(); if (draft) draft(); openPrivacy(link); });
     var consentBox = el('div', { class: 'ent-consent' }, [
       el('label', { class: 'ent-check' }, [cb, el('span', { text: S('consent') })]),
       el('p', { class: 'ent-note' }, [link])
