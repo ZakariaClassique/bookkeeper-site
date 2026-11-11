@@ -14,7 +14,7 @@
     offerPrice: { fr: '4,99 €', en: '$4.99' },
     offerFeatures: {
       fr: "Scanner le code-barres d'un livre, écrire ou dicter des notes, suivre ta progression, voir des statistiques sans pression, partager une citation en image, exporter tes données. Tout reste sur ton téléphone, sans compte ni publicité.",
-      en: "Scan a book's barcode, write or dictate notes, track your progress, see stats without pressure, share a quote as an image, export your data. Everything stays on your phone, no account, no ads."
+      en: "Scan a book's barcode, write or dictate notes, track your progress, see stats without pressure, share a quote as an image, export your data. Everything stays on your phone, with no account and no ads."
     }
   };
 
@@ -41,21 +41,21 @@
       pickOne: 'Choisis une réponse pour continuer.', pickMany: 'Choisis au moins une réponse pour continuer.',
       email: 'Ton adresse e-mail', emailPh: 'ton@adresse.fr', emailBad: 'Écris une adresse e-mail valide, ou choisis « Non, merci ».',
       sendFail: "L'envoi n'a pas marché. Vérifie ta connexion et réessaie.",
-      thanks: 'Merci !', thanksText: 'Tes réponses sont bien arrivées, elles vont vraiment nous aider.', shareTitle: 'Un autre lecteur pour nous aider ?', shareText: 'Envoie le questionnaire à quelqu’un qui aime lire. Ça prend 5 minutes.', shareBtn: 'Partager le questionnaire', shareMsg: 'Parle-nous de tes lectures : 5 minutes pour nous aider à imaginer un carnet de lecture privé.', shareCopied: 'Lien copié. Colle-le où tu veux.', shareFail: 'Impossible de partager ici. Copie le lien de la page.', closeHint: 'Tu peux fermer cette page.', preview: "Mode aperçu : rien n'a été envoyé ni enregistré."
+      thanks: 'Merci !', thanksNamed: function (n) { return 'Merci ' + n + ' !'; }, thanksText: 'Tes réponses sont bien arrivées, elles vont vraiment nous aider.', shareTitle: 'Un autre lecteur pour nous aider ?', shareText: 'Envoie le questionnaire à quelqu’un qui aime lire. Ça prend 5 minutes.', shareBtn: 'Partager le questionnaire', shareMsg: 'Parle-nous de tes lectures : 5 minutes pour nous aider à imaginer un carnet de lecture privé.', shareCopied: 'Lien copié. Colle-le où tu veux.', shareFail: 'Impossible de partager ici. Copie le lien de la page.', closeHint: 'Tu peux fermer cette page.', preview: "Mode aperçu : rien n'a été envoyé ni enregistré."
     },
     en: {
       title: 'Tell us about your reading · Book Keeper', skip: 'Skip to content', back: 'Back', next: 'Next', send: 'Send my answers', sending: 'Sending…', start: 'Start',
       progress: 'Questionnaire progress',
       qOf: function (p, t) { return 'Question ' + p + ' of ' + t; }, pct: function (n) { return n + '%'; },
-      introTitle: 'Tell us about your reading', introSub: 'A few questions to better understand how you read. There are no right or wrong answers.',
-      f1: '5 minutes', f2: 'Only read by our team', f3: 'Tell us what you really think',
-      consent: "I'm 15 or older and I agree to let the Book Keeper team read my answers to better understand readers.",
-      privacy: 'Privacy details', privacyHref: 'privacy.html', close: 'Close', privLoad: 'Loading…', privFail: "Can't show the page here.", privOpen: 'Open in a new tab', tick: 'Tick the box to start.',
+      introTitle: 'Tell us about your reading', introSub: 'A few quick questions about how you read. There are no right or wrong answers.',
+      f1: 'About 5 minutes', f2: 'Only our team will read them', f3: 'Tell us what you really think',
+      consent: "I'm 15 or older, and I agree that the Book Keeper team can read my answers to help them understand readers.",
+      privacy: 'Privacy details', privacyHref: 'privacy.html', close: 'Close', privLoad: 'Loading…', privFail: "Can't show the page here.", privOpen: 'Open in a new tab', tick: 'Check the box to start.',
       logoAlt: 'A cozy reading nook with an armchair and a bookshelf',
       pickOne: 'Pick an answer to continue.', pickMany: 'Pick at least one answer to continue.',
       email: 'Your email address', emailPh: 'you@example.com', emailBad: 'Enter a valid email address, or choose “No, thanks”.',
-      sendFail: "Sending failed. Check your connection and try again.",
-      thanks: 'Thank you!', thanksText: 'Your answers have arrived and will really help us.', shareTitle: 'Another reader to help us?', shareText: 'Send the questionnaire to someone who loves reading. It takes 5 minutes.', shareBtn: 'Share the questionnaire', shareMsg: 'Tell us about your reading: 5 minutes to help us imagine a private reading journal.', shareCopied: 'Link copied. Paste it anywhere.', shareFail: "Can't share here. Copy the page link.", closeHint: 'You can close this page.', preview: 'Preview mode: nothing was sent or saved.'
+      sendFail: "Your answers weren't sent. Check your connection and try again.",
+      thanks: 'Thank you!', thanksNamed: function (n) { return 'Thank you, ' + n + '!'; }, thanksText: 'Your answers have been sent. They will really help us.', shareTitle: 'Know another reader who could help?', shareText: 'Send this questionnaire to someone who loves books. It only takes 5 minutes.', shareBtn: 'Share the questionnaire', shareMsg: 'Tell us about your reading. It takes 5 minutes and helps us imagine a private reading journal.', shareCopied: 'Link copied. Paste it anywhere.', shareFail: "Can't share here. Copy the page link.", closeHint: 'You can close this page.', preview: 'Preview mode: nothing was sent or saved.'
     }
   };
   function S(k) { return UI[LANG][k]; }
@@ -119,38 +119,40 @@
   var HAS_TRIED = function (a) { return a.essai_appli === 'Oui'; };
   var QUESTIONS = [
     { id: 'surnom', cat: 'Toi', type: 'text', required: false, label: 'Ton prénom, ou un surnom ?', hint: 'Comme tu veux. Tu peux laisser vide.',
-      en: { cat: 'You', label: 'Your first name, or a nickname?', hint: 'Whatever you like. You can leave it empty.' } },
+      en: { cat: 'You', label: 'Your first name, or a nickname?', hint: 'Whatever you like. You can skip this one.' } },
     { id: 'age', cat: 'Toi', type: 'choice', required: true, label: "Dans quelle tranche d'âge es-tu ?", options: ['15 à 17 ans', '18 à 24 ans', '25 à 34 ans', '35 à 44 ans', '45 ans et plus'], icons: ['user', 'user', 'user', 'user', 'user'],
-      en: { cat: 'You', label: 'Which age range are you in?', options: ['15 to 17', '18 to 24', '25 to 34', '35 to 44', '45 and over'] } },
+      en: { cat: 'You', label: "What's your age range?", options: ['15 to 17', '18 to 24', '25 to 34', '35 to 44', '45 and over'] } },
     { id: 'frequence', cat: 'Tes lectures', type: 'choice', required: true, label: 'Tu lis à quelle fréquence ?', options: ['Tous les jours', 'Quelques fois par semaine', 'Quelques fois par mois', 'Rarement'], icons: ['sun', 'repeat', 'calendar', 'hourglass'],
       en: { cat: 'Your reading', label: 'How often do you read?', options: ['Every day', 'A few times a week', 'A few times a month', 'Rarely'] } },
     { id: 'support', cat: 'Tes lectures', type: 'choice', required: true, label: 'Tu lis surtout sur quoi ?', options: ['Livres papier', 'Liseuse ou tablette', 'Téléphone', 'Livres audio', 'Un peu de tout'], icons: ['book', 'tablet', 'phone', 'headphones', 'layers'],
       en: { cat: 'Your reading', label: 'What do you mostly read on?', options: ['Paper books', 'E-reader or tablet', 'Phone', 'Audiobooks', 'A bit of everything'] } },
     { id: 'souvenir', cat: 'Tes lectures', type: 'multi', max: 4, required: true, label: "Pense à ton dernier livre terminé. Qu'as-tu fait pour t'en souvenir ?", hint: 'Plusieurs choix possibles.', options: ['Rien de particulier', "J'ai marqué ou surligné des passages", "J'ai écrit dans un carnet", "J'ai pris des notes sur mon téléphone", "J'ai photographié des pages", "J'en ai parlé à quelqu'un", 'Autre chose'], icons: ['ban', 'highlighter', 'pencil', 'notes', 'camera', 'message', 'dots'],
-      en: { cat: 'Your reading', label: 'Think of the last book you finished. What did you do to remember it?', hint: 'You can pick several.', options: ['Nothing in particular', 'I marked or highlighted passages', 'I wrote in a notebook', 'I took notes on my phone', 'I took photos of pages', 'I talked about it with someone', 'Something else'] } },
+      en: { cat: 'Your reading', label: 'Think of the last book you finished. What did you do to remember it afterward?', hint: 'You can pick several.', options: ['Nothing in particular', 'I marked or highlighted passages', 'I wrote in a notebook', 'I took notes on my phone', 'I took photos of pages', 'I talked about it with someone', 'Something else'] } },
     { id: 'moment', cat: 'Tes lectures', type: 'choice', required: true, label: "En général, quand notes-tu une idée ou une phrase d'un livre ?", options: ['Tout de suite, pendant la lecture', "À la fin d'un chapitre", 'À la fin du livre', 'Je ne note jamais'], icons: ['zap', 'bookmark', 'flag', 'ban'],
-      en: { cat: 'Your reading', label: 'In general, when do you note down an idea or a sentence from a book?', options: ['Right away, while reading', 'At the end of a chapter', 'At the end of the book', 'I never take notes'] } },
+      en: { cat: 'Your reading', label: 'When do you usually note down an idea or a line from a book?', options: ['Right away, while reading', 'At the end of a chapter', 'At the end of the book', 'I never take notes'] } },
     { id: 'essai_appli', cat: 'Tes applis', type: 'choice', required: true, label: 'As-tu déjà essayé une appli pour suivre tes lectures ?', options: ['Oui', 'Non'], icons: ['check', 'x'],
       en: { cat: 'Your apps', label: 'Have you ever tried an app to keep track of your reading?', options: ['Yes', 'No'] } },
     { id: 'quelle_appli', cat: 'Tes applis', type: 'text', required: false, showIf: HAS_TRIED, label: 'Laquelle ?', hint: "Son nom suffit. Si tu en as essayé plusieurs, donne celle que tu as le plus utilisée.",
-      en: { cat: 'Your apps', label: 'Which one?', hint: "Just the name. If you've tried several, give the one you used most." } },
+      en: { cat: 'Your apps', label: 'Which one?', hint: "Just the name. If you've tried several, pick the one you used most." } },
     { id: 'ux', cat: 'Tes applis', type: 'choice', required: true, showIf: HAS_TRIED, label: "Comment l'as-tu trouvée à utiliser ?", options: ['Simple et agréable', 'Correcte, sans plus', 'Compliquée ou pénible'], icons: ['smile', 'meh', 'frown'],
-      en: { cat: 'Your apps', label: 'What was it like to use?', options: ['Simple and pleasant', 'Okay, nothing special', 'Complicated or annoying'] } },
+      en: { cat: 'Your apps', label: 'What was it like to use?', options: ['Easy and pleasant', 'Fine, nothing special', 'Complicated or frustrating'] } },
     { id: 'pourquoi', cat: 'Tes applis', type: 'long', required: false, showIf: HAS_TRIED, label: "Qu'est-ce qui t'a le plus plu ou le plus gêné ?", hint: "Même en une phrase. Dis-nous aussi si tu l'utilises encore.",
-      en: { cat: 'Your apps', label: 'What did you like most, or what bothered you most?', hint: 'Even in one sentence. Tell us if you still use it too.' } },
+      en: { cat: 'Your apps', label: 'What did you like most, or what bothered you most?', hint: 'A single sentence is fine. Tell us if you still use it, too.' } },
+    { id: 'manque_appli', cat: 'Tes applis', type: 'long', required: false, showIf: HAS_TRIED, label: "Y a-t-il une fonction que tu n'as jamais trouvée dans ces applis, ou que tu aimerais y avoir ?", hint: 'Même une petite idée. Tu peux laisser vide.',
+      en: { cat: 'Your apps', label: 'Is there a feature you never found in those apps, or one you wish they had?', hint: 'Even a small idea helps. You can skip this.' } },
     { id: 'envie', cat: 'Tes envies', type: 'multi', max: 2, shuffle: true, fixedLast: 1, required: true, label: "Si une appli t'aidait à retrouver tes passages préférés et tes notes, quelles fonctions te tenteraient le plus ?", hint: 'Choisis-en deux au maximum.', options: ['Dicter une note à la voix, sans rien taper', 'Transformer une citation en belle image à partager', "Scanner le code-barres d'un livre pour l'ajouter tout seul", 'Voir mes statistiques de lecture (livres lus, temps passé…)', "Tout garder sur mon téléphone, sans compte ni internet", 'Aucune ne me donne envie'], icons: ['mic', 'image', 'scan', 'chart', 'lock', 'minus'],
-      en: { cat: 'Your ideas', label: 'If an app helped you find your favorite passages and notes, which features would tempt you most?', hint: 'Pick two at most.', options: ['Dictate a note by voice, without typing', 'Turn a quote into a nice image to share', "Scan a book's barcode to add it automatically", 'See my reading stats (books read, time spent…)', 'Keep everything on my phone, no account or internet', 'None of these appeal to me'] } },
+      en: { cat: 'Your ideas', label: 'If an app helped you find your favorite passages and notes, which features would tempt you most?', hint: 'Pick two at most.', options: ['Dictate a note with your voice, no typing', 'Turn a quote into a beautiful image to share', "Scan a book's barcode to add it automatically", 'See my reading stats (books read, time spent…)', 'Keep everything on my phone, no account or internet needed', 'None of these appeal to me'] } },
     { id: 'prix', cat: 'Tes envies', type: 'choice', required: true, label: "Imagine que tu achètes une appli comme celle-là en une seule fois (un paiement unique, pas d'abonnement). Quel prix maximum te paraîtrait correct ?", options: ["Je ne l'achèterais pas", "Jusqu'à 3 €", "Jusqu'à 5 €", "Jusqu'à 10 €", 'Plus de 10 €'], icons: ['x', 'euro', 'euro', 'euro', 'euro'],
-      en: { cat: 'Your ideas', label: "Imagine you buy an app like that once (a single payment, no subscription). What's the highest price that would feel fair?", options: ["I wouldn't buy it", 'Up to $3', 'Up to $5', 'Up to $10', 'More than $10'] } },
+      en: { cat: 'Your ideas', label: "Imagine buying an app like that once (one payment, no subscription). What's the most you'd consider fair to pay?", options: ["I wouldn't buy it", 'Up to $3', 'Up to $5', 'Up to $10', 'More than $10'] } },
     { id: 'interet', cat: 'Tes envies', type: 'choice', required: true,
       label: function () { return 'Une appli avec ces fonctions, à ' + CONFIG.offerPrice.fr + ", en paiement unique, sans abonnement : ça t'intéresserait ?"; },
       hint: function () { return CONFIG.offerFeatures.fr; },
       options: ['Oui, sûrement', 'Peut-être, ça dépend', 'Non, pas pour ce prix', "Non, ce genre d'appli ne m'intéresse pas"], icons: ['check', 'meh', 'euro', 'x'],
-      en: { cat: 'Your ideas', label: function () { return 'An app with these features for ' + CONFIG.offerPrice.en + ', one payment, no subscription: would you be interested?'; }, hint: function () { return CONFIG.offerFeatures.en; }, options: ['Yes, definitely', 'Maybe, it depends', 'No, not at this price', "No, this kind of app doesn't interest me"] } },
+      en: { cat: 'Your ideas', label: function () { return 'An app with these features for ' + CONFIG.offerPrice.en + ', one payment and no subscription. Would you be interested?'; }, hint: function () { return CONFIG.offerFeatures.en; }, options: ['Yes, definitely', 'Maybe, it depends', 'No, not at this price', "No, this kind of app doesn't interest me"] } },
     { id: 'agacements', cat: 'Pour finir', type: 'long', required: false, label: "Pour garder une trace de tes lectures, qu'est-ce qui t'agace ou te manque ?", hint: "Même un détail. Sois honnête : une critique nous aide plus qu'un compliment.",
-      en: { cat: 'To finish', label: 'To keep track of your reading, what annoys you or is missing?', hint: 'Even a small detail. Be honest: criticism helps us more than a compliment.' } },
+      en: { cat: 'Almost done', label: "When you keep track of your reading, what annoys you or what's missing?", hint: 'Even a small detail counts. Be honest: criticism helps us more than praise.' } },
     { id: 'tester', cat: 'Pour finir', type: 'contact', required: false, label: "Veux-tu qu'on te tienne au courant de la suite ?", options: ['Oui', 'Non, merci'], icons: ['check', 'x'], hint: "Si oui, laisse une adresse e-mail : on te prévient, et tu pourras peut-être tester en avant-première. On ne s'en sert que pour ça.",
-      en: { cat: 'To finish', label: 'Do you want us to keep you posted?', options: ['Yes', 'No, thanks'], hint: "If yes, leave an email address: we'll let you know, and you may get to try it first. We only use it for that." } }
+      en: { cat: 'Almost done', label: 'Do you want us to keep you posted?', options: ['Yes', 'No, thanks'], hint: "If yes, leave your email and we'll keep you posted. You might even get to try it first. We'll only use it for that." } }
   ];
 
   // Texte d'une question dans la langue choisie (une fonction est appelée, pour les textes qui dépendent d'un réglage).
@@ -542,6 +544,7 @@
     var r = { date: new Date().toISOString(), consentement: 'oui' };
     QUESTIONS.forEach(function (q) { var on = shown(q); r[q.id] = safe(on ? answers[q.id] : ''); if (q.type === 'contact') r[q.id + '_email'] = safe(answers[q.id + '_email']); });
     r.langue = LANG;
+    var m = r.manque_appli; delete r.manque_appli; r.manque_appli = m; // nouvelle colonne : à la fin, après langue
     return r;
   }
 
@@ -580,7 +583,8 @@
 
   function showDone() {
     draft = null;
-    var kids = [ico('check'), el('h2', { text: S('thanks') }), el('p', { text: S('thanksText') })];
+    var nm = String(answers.surnom || '').trim().slice(0, 24);
+    var kids = [ico('check'), el('h2', { text: nm ? S('thanksNamed')(nm) : S('thanks') }), el('p', { text: S('thanksText') })];
     if (!CONFIG.endpoint) kids.push(el('p', { class: 'ent-note', text: S('preview') }));
     var shareBtn = el('button', { type: 'button', class: 'ent-btn' }, [svg('share'), el('span', { text: S('shareBtn') })]);
     shareBtn.addEventListener('click', shareForm);
