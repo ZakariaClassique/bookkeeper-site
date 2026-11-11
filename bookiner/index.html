@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
+<title>Parle-nous de tes lectures · Book Keeper</title>
+<meta name="description" content="Quelques questions sur la façon dont tu notes tes lectures. Réservé à nos proches, 5 minutes.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="entretien.css">
+</head>
+<body class="is-intro">
+<a class="skip" href="#app">Aller au contenu</a>
+<header class="ent-top">
+  <p class="ent-brand"><img src="logo-porte-v2.png" alt="" width="40" height="40">Book Keeper</p>
+  <div class="ent-progress" id="progress" hidden>
+    <div class="ent-progress-row"><p id="progress-text"></p><p id="progress-pct"></p></div>
+    <div class="ent-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Avancement du questionnaire"><span id="progress-fill"></span></div>
+  </div>
+  <div class="ent-bar">
+    <button type="button" class="ent-back-top" id="back-top" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span id="back-label">Retour</span></button>
+    <button type="button" class="ent-lang" id="lang" aria-label="Langue : français. Appuyer pour passer en anglais."><span class="ent-lang-opt on" data-lang="fr" aria-hidden="true"><span class="ent-flag"><svg viewBox="0 0 24 16" aria-hidden="true" focusable="false"><rect width="8" height="16" fill="#0055A4"/><rect x="8" width="8" height="16" fill="#FFFFFF"/><rect x="16" width="8" height="16" fill="#EF4135"/></svg></span><span>FR</span></span><span class="ent-lang-opt" data-lang="en" aria-hidden="true"><span class="ent-flag"><svg viewBox="0 0 60 40" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#012169"/><path d="M0 0 60 40M60 0 0 40" stroke="#FFFFFF" stroke-width="8"/><path d="M0 0 60 40M60 0 0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#FFFFFF" stroke-width="13"/><path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="7"/></svg></span><span>EN</span></span></button>
+  </div>
+</header>
+<main class="ent-main" id="app" tabindex="-1">
+  <noscript><p>Ce questionnaire a besoin de JavaScript pour s'afficher. Écris-nous simplement tes réponses par message. / This questionnaire needs JavaScript. Just send us your answers by message.</p></noscript>
+</main>
+<script src="entretien.js" defer></script>
+</body>
+</html>
