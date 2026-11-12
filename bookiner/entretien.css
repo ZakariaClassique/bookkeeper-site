@@ -8,7 +8,8 @@
   --line: #DEDEDB;
   --text: #4A2F31; /* bordeaux foncé du design system (bo900) : plus de noir ni de gris foncé */
   --text-2: #4A2F31;
-  --ok: #2D4A33; /* vert « succès » du design system (sageDeep) */
+  --ok-bg: #8FD3A4; /* vert vif du design system (foA300) : validation, remerciement */
+  --ok: #1F4D33; /* vert forêt du design system (fo700) pour le trait du check */
   --wine: #6E1F2E;
   --wine-dark: #4A2F31; /* bordeaux foncé du design system (bo900) */
   --on-wine: #FFFFFF;
@@ -93,8 +94,8 @@ a { color: var(--text); text-decoration-thickness: 2px; text-underline-offset: 4
 .ent-done { align-items: center; text-align: center; }
 .ent-done h2, .ent-done p { margin: 0; }
 .ent-done h2 + p { margin-top: -8px; }
-.ent-done .ent-ico { width: 56px; height: 56px; border-radius: 16px; color: var(--ok); }
-.ent-done .ent-ico svg { width: 30px; height: 30px; }
+.ent-done .ent-ico { width: 64px; height: 64px; border-radius: 999px; background: var(--ok-bg); color: var(--ok); }
+.ent-done .ent-ico svg { width: 32px; height: 32px; stroke-width: 3; }
 .ent-share { margin-top: -8px; margin-bottom: 24px; align-items: stretch; }
 .ent-share-img { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: 16px; border: 1px solid var(--line); }
 .ent-card.ent-share h3 { margin: 0; font-size: 1.125rem; line-height: 1.3; font-weight: 700; text-wrap: pretty; }
