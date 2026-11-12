@@ -406,7 +406,13 @@
     cb.addEventListener('change', function () { consent = cb.checked; });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (!cb.checked) { toast(S('tick')); return; }
+      if (!cb.checked) {
+        toast(S('tick'));
+        // Fait défiler en douceur jusqu'à la case à cocher, pour que la zone à remplir soit visible.
+        consentBox.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+        cb.focus({ preventScroll: true });
+        return;
+      }
       go(1);
     });
     show([form], 'h1');
