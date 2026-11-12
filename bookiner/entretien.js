@@ -120,7 +120,7 @@
   var QUESTIONS = [
     { id: 'surnom', cat: 'Toi', type: 'text', required: false, label: 'Ton prénom, ou un surnom ?', hint: 'Comme tu veux. Tu peux laisser vide.',
       en: { cat: 'You', label: 'Your first name, or a nickname?', hint: 'Whatever you like. You can skip this one.' } },
-    { id: 'age', cat: 'Toi', type: 'choice', required: true, label: "Dans quelle tranche d'âge es-tu ?", options: ['15 à 17 ans', '18 à 24 ans', '25 à 34 ans', '35 à 44 ans', '45 ans et plus'], icons: ['user', 'user', 'user', 'user', 'user'],
+    { id: 'age', cat: 'Toi', type: 'choice', required: true, label: "Dans quelle tranche d'âge es-tu ?", options: ['15 à 17 ans', '18 à 24 ans', '25 à 34 ans', '35 à 44 ans', '45 ans et plus'],
       en: { cat: 'You', label: "What's your age range?", options: ['15 to 17', '18 to 24', '25 to 34', '35 to 44', '45 and over'] } },
     { id: 'frequence', cat: 'Tes lectures', type: 'choice', required: true, label: 'Tu lis à quelle fréquence ?', options: ['Tous les jours', 'Quelques fois par semaine', 'Quelques fois par mois', 'Rarement'], icons: ['sun', 'repeat', 'calendar', 'hourglass'],
       en: { cat: 'Your reading', label: 'How often do you read?', options: ['Every day', 'A few times a week', 'A few times a month', 'Rarely'] } },
@@ -142,7 +142,7 @@
       en: { cat: 'Your apps', label: 'Is there a feature you never found in those apps, or one you wish they had?', hint: 'Even a small idea helps. You can skip this.' } },
     { id: 'envie', cat: 'Tes envies', type: 'multi', max: 3, shuffle: true, fixedLast: 1, required: true, label: "Si une appli t'aidait à suivre tes lectures, quelles idées te donneraient le plus envie ?", hint: 'Choisis-en trois au maximum.', options: ['Dicter une note à la voix, sans rien taper', 'Transformer une citation en belle image à partager', 'Photographier une page pour en garder un passage', "Scanner le code-barres d'un livre pour l'ajouter tout seul", 'Voir mes statistiques de lecture (livres lus, temps passé…)', "Tout garder sur mon téléphone, sans compte ni internet", 'Aucune ne me donne envie'], icons: ['mic', 'image', 'camera', 'scan', 'chart', 'lock', 'minus'],
       en: { cat: 'Your ideas', label: 'If an app helped you keep track of your reading, which of these ideas would you want most?', hint: 'Pick three at most.', options: ['Dictate a note with your voice, no typing', 'Turn a quote into a beautiful image to share', 'Photograph a page to save a passage', "Scan a book's barcode to add it automatically", 'See my reading stats (books read, time spent…)', 'Keep everything on my phone, no account or internet needed', 'None of these appeal to me'] } },
-    { id: 'prix', cat: 'Tes envies', type: 'choice', required: true, label: "Imagine que tu achètes une appli comme celle-là en une seule fois (un paiement unique, pas d'abonnement). Quel prix maximum te paraîtrait correct ?", options: ["Je ne l'achèterais pas", "Jusqu'à 3 €", "Jusqu'à 5 €", "Jusqu'à 10 €", 'Plus de 10 €'], icons: ['x', 'euro', 'euro', 'euro', 'euro'],
+    { id: 'prix', cat: 'Tes envies', type: 'choice', required: true, label: "Imagine que tu achètes une appli comme celle-là en une seule fois (un paiement unique, pas d'abonnement). Quel prix maximum te paraîtrait correct ?", options: ["Je ne l'achèterais pas", "Jusqu'à 3 €", "Jusqu'à 5 €", "Jusqu'à 10 €", 'Plus de 10 €'],
       en: { cat: 'Your ideas', label: "Imagine buying an app like that once (one payment, no subscription). What's the most you'd consider fair to pay?", options: ["I wouldn't buy it", 'Up to $3', 'Up to $5', 'Up to $10', 'More than $10'] } },
     { id: 'interet', cat: 'Tes envies', type: 'choice', required: true,
       label: function () { return 'Une appli avec ces fonctions, à ' + CONFIG.offerPrice.fr + ", en paiement unique, sans abonnement : ça t'intéresserait ?"; },
@@ -420,7 +420,8 @@
     if (q.icons && q.icons[k]) kids.push(ico(q.icons[k]));
     kids.push(el('span', { class: 'ent-opt-text', text: optText(q, k) }));
     if (type === 'checkbox') { var bx = el('span', { class: 'ent-box' }); bx.appendChild(svg('check')); kids.push(bx); }
-    return el('label', { class: 'ent-choice' }, [inp, el('span', { class: 'ent-opt' }, kids)]);
+    var plain = !(q.icons && q.icons[k]);
+    return el('label', { class: 'ent-choice' }, [inp, el('span', { class: plain ? 'ent-opt ent-opt-plain' : 'ent-opt' }, kids)]);
   }
 
   function question(i) {

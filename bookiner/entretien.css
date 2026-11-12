@@ -46,6 +46,7 @@ a { color: var(--text); text-decoration-thickness: 2px; text-underline-offset: 4
 .ent-choice { display: block; position: relative; }
 .ent-choice input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .ent-opt { display: flex; align-items: center; gap: 16px; min-height: 64px; padding: 8px 16px 8px 12px; background: var(--bg); border: 2px solid var(--line); border-radius: 16px; }
+.ent-opt-plain { padding-left: 16px; }
 .ent-ico { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--soft); color: var(--text); }
 .ent-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .ent-opt-text { flex: 1; font-weight: 600; line-height: 1.3; }
