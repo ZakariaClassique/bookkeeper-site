@@ -41,7 +41,7 @@
       pickOne: 'Choisis une réponse pour continuer.', pickMany: 'Choisis au moins une réponse pour continuer.',
       email: 'Ton adresse e-mail', emailPh: 'ton@adresse.fr', emailBad: 'Écris une adresse e-mail valide, ou choisis « Non, merci ».',
       sendFail: "L'envoi n'a pas marché. Vérifie ta connexion et réessaie.",
-      thanks: 'Merci !', thanksNamed: function (n) { return 'Merci ' + n + ' !'; }, thanksText: 'Tes réponses sont bien arrivées, elles vont vraiment nous aider.', shareTitle: 'Un autre lecteur pour nous aider ?', shareText: 'Envoie le questionnaire à quelqu’un qui aime lire. Ça prend 5 minutes.', shareBtn: 'Partager le questionnaire', shareMsg: 'Parle-nous de tes lectures : 5 minutes pour nous aider à imaginer un carnet de lecture privé.', shareCopied: 'Lien copié. Colle-le où tu veux.', shareFail: 'Impossible de partager ici. Copie le lien de la page.', closeHint: 'Tu peux fermer cette page.', preview: "Mode aperçu : rien n'a été envoyé ni enregistré."
+      thanks: 'Merci !', thanksNamed: function (n) { return 'Merci ' + n + ' !'; }, thanksText: 'Tes réponses sont bien arrivées, elles vont vraiment nous aider.', shareTitle: 'Un autre lecteur pour nous aider ?', shareText: 'Envoie le questionnaire à quelqu’un qui aime lire. Ça prend 5 minutes.', shareBtn: 'Partager le questionnaire', shareMsg: 'Parle-nous de tes lectures : 5 minutes pour nous aider à imaginer un carnet de lecture privé.', shareCopied: 'Lien copié. Colle-le où tu veux.', shareFail: 'Impossible de partager ici. Copie le lien de la page.', preview: "Mode aperçu : rien n'a été envoyé ni enregistré."
     },
     en: {
       title: 'Tell us about your reading · Book Keeper', skip: 'Skip to content', back: 'Back', next: 'Next', send: 'Send my answers', sending: 'Sending…', start: 'Start',
@@ -55,7 +55,7 @@
       pickOne: 'Pick an answer to continue.', pickMany: 'Pick at least one answer to continue.',
       email: 'Your email address', emailPh: 'you@example.com', emailBad: 'Enter a valid email address, or choose “No, thanks”.',
       sendFail: "Your answers weren't sent. Check your connection and try again.",
-      thanks: 'Thank you!', thanksNamed: function (n) { return 'Thank you, ' + n + '!'; }, thanksText: 'Your answers have been sent. They will really help us.', shareTitle: 'Know another reader who could help?', shareText: 'Send this questionnaire to someone who loves books. It only takes 5 minutes.', shareBtn: 'Share the questionnaire', shareMsg: 'Tell us about your reading. It takes 5 minutes and helps us imagine a private reading journal.', shareCopied: 'Link copied. Paste it anywhere.', shareFail: "Can't share here. Copy the page link.", closeHint: 'You can close this page.', preview: 'Preview mode: nothing was sent or saved.'
+      thanks: 'Thank you!', thanksNamed: function (n) { return 'Thank you, ' + n + '!'; }, thanksText: 'Your answers have been sent. They will really help us.', shareTitle: 'Know another reader who could help?', shareText: 'Send this questionnaire to someone who loves books. It only takes 5 minutes.', shareBtn: 'Share the questionnaire', shareMsg: 'Tell us about your reading. It takes 5 minutes and helps us imagine a private reading journal.', shareCopied: 'Link copied. Paste it anywhere.', shareFail: "Can't share here. Copy the page link.", preview: 'Preview mode: nothing was sent or saved.'
     }
   };
   function S(k) { return UI[LANG][k]; }
@@ -592,8 +592,7 @@
       el('img', { class: 'ent-share-img', src: 'og-bookiner.jpg', alt: '', width: '1200', height: '630' }),
       el('h3', { text: S('shareTitle') }),
       el('p', { text: S('shareText') }),
-      shareBtn,
-      el('p', { class: 'ent-note', text: S('closeHint') })
+      shareBtn
     ]);
     show([el('div', { class: 'ent-card ent-done' }, kids), card], 'h2');
   }
